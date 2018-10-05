@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8">
+  	<title>Friend Generator</title>
+  	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/glacial-indifference" type="text/css"> 
+  	<link rel="stylesheet" href="style.css" type="text/css">
+  	<style>
+  		body {
+  			font-family: 'GlacialIndifferenceRegular';
+  			font-weight: normal;
+  			font-style: normal;
+  			text-align: center;
+  		}
+  		.container {
+  			display: flex;
+  			flex-direction: row;
+  			flex-wrap: nowrap;
+  			align-items: flex-start;
+  			height: 100%;	
+  		}
+  		.item {
+  			width: 50%;
+				padding-bottom: 12px;
+  			margin: 12px;
+  			border-radius: 12px;
+  		}
+  		.button {
+  			background-color: Snow;
+  			border: none;
+  			border-radius: 4px;
+  			cursor: pointer;
+  			padding: 8px 16px;
+  			margin-bottom: 8px;
+  		}
+  		#cat {
+  			background-color: CornflowerBlue;
+  		}
+  		#dog {
+  			background-color: SandyBrown;
+  		}
+  		img {
+  			max-width: 800px;
+  			max-height: 600px;
+  			border-radius: 8px;
+  			margin: 4px;
+  		}
+  	</style>
+  </head>
+  <body>
+  	<h2>Are you a cat person or a dog person?</h2>
+  	<div class="container">
+  		<div class="item" id="cat">
+  			<h3>Show me Cats!</h3>
+  			<button class="button" id="anotherCat">Another!</button>
+  			<button class="button" id="resetCat">Reset</button>
+  			<div class="imageContainer" id="catPics"></div>
+  		</div>
+  		<div class="item" id="dog">
+  			<h3>Show me Dogs!</h3>
+  			<button class="button" id="anotherDog">Another!</button>
+  			<button class="button" id="resetDog">Reset</button>
+  			<div class="imageContainer" id="dogPics"></div>
+  		</div>
+  	</div>
+
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  	<script>
+  		$("#anotherCat").click(function(e){
+  			var randomCatURL = "https://api.thecatapi.com/v1/images/search";
+  			console.log(randomCatURL);
+  			$.ajax({
+  				url : randomCatURL,
+  				dataType : "json",
+  				success : function(parsed_json) {
+  					console.log(parsed_json);
+  					var imageHTML = "<img src='" + parsed_json[0]["url"] + "'><br>";
+  					$("#catPics").prepend(imageHTML);
+  				}
+  			});
+  		});
+  		$("#resetCat").click(function(e){
+  			console.log("docpics emptied");
+  			$("#catPics").empty();
+  		})
+  		$("#anotherDog").click(function(e){
+  			var randomDogURL = "https://dog.ceo/api/breeds/image/random";
+  			console.log(randomDogURL);
+  			$.ajax({
+  				url : randomDogURL,
+  				dataType : "json",
+  				success : function(parsed_json) {
+  					var imageHTML = "<img src='" + parsed_json["message"] + "'><br>";
+  					$("#dogPics").prepend(imageHTML);
+  				}
+  			});
+  		});
+  		$("#resetDog").click(function(e){
+  			console.log("docpics emptied");
+  			$("#dogPics").empty();
+  		})
+  	</script>
+  </body>
+</html>
+
